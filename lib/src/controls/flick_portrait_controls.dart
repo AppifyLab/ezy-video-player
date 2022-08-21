@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 
 /// Default portrait controls.
-class FlickPortraitControls extends StatelessWidget {
-  const FlickPortraitControls(
-      {Key? key,
-      this.iconSize = 20,
-      this.fontSize = 12,
-      this.progressBarSettings})
-      : super(key: key);
+// ignore: must_be_immutable
+class FlickPortraitControls extends StatefulWidget {
+  const FlickPortraitControls({Key? key, this.iconSize = 20, this.fontSize = 12, this.flickManager, this.progressBarSettings}) : super(key: key);
 
   /// Icon size.
   ///
@@ -20,8 +16,24 @@ class FlickPortraitControls extends StatelessWidget {
   /// This size is used for all the text.
   final double fontSize;
 
+  /// [FlickManager] flickManager.
+  final FlickManager? flickManager;
+
   /// [FlickProgressBarSettings] settings.
   final FlickProgressBarSettings? progressBarSettings;
+
+  @override
+  State<FlickPortraitControls> createState() => _FlickPortraitControlsState();
+}
+
+class _FlickPortraitControlsState extends State<FlickPortraitControls> {
+  bool showLeftDuration = false, isFullscreen = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isFullscreen = widget.flickManager?.flickControlManager?.isFullscreen ?? false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,51 +69,77 @@ class FlickPortraitControls extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   FlickVideoProgressBar(
-                    flickProgressBarSettings: progressBarSettings,
+                    flickProgressBarSettings: widget.progressBarSettings,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       FlickPlayToggle(
-                        size: iconSize,
+                        size: widget.iconSize,
                       ),
                       SizedBox(
-                        width: iconSize / 2,
+                        width: widget.iconSize / 2,
                       ),
                       FlickSoundToggle(
-                        size: iconSize,
+                        size: widget.iconSize,
                       ),
                       SizedBox(
-                        width: iconSize / 2,
+                        width: widget.iconSize / 2,
                       ),
-                      Row(
-                        children: <Widget>[
-                          FlickCurrentPosition(
-                            fontSize: fontSize,
-                          ),
-                          FlickAutoHideChild(
-                            child: Text(
-                              ' / ',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: fontSize),
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: const BorderRadius.all(Radius.circular(50)),
+                          onTap: () {
+                            setState(() {
+                              showLeftDuration = !showLeftDuration;
+                            });
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: isFullscreen ? 30 : 15),
+                            child: Row(
+                              children: [
+                                if (showLeftDuration)
+                                  Text(
+                                    '-',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      letterSpacing: 0.4,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                showLeftDuration
+                                    ? FlickLeftDuration(fontSize: widget.fontSize, color: Colors.white)
+                                    : FlickCurrentPosition(fontSize: widget.fontSize, color: Colors.white),
+                                SizedBox(width: widget.iconSize / 4),
+                                Text(
+                                  '/',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    letterSpacing: 0.4,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(width: widget.iconSize / 4),
+                                FlickTotalDuration(fontSize: widget.fontSize, color: Colors.white),
+                                // SizedBox(width: widget.iconSize / 2),
+                                // FlickSoundToggle(size: widget.iconSize),
+                              ],
                             ),
                           ),
-                          FlickTotalDuration(
-                            fontSize: fontSize,
-                          ),
-                        ],
+                        ),
                       ),
                       Expanded(
                         child: Container(),
                       ),
                       FlickSubtitleToggle(
-                        size: iconSize,
+                        size: widget.iconSize,
                       ),
                       SizedBox(
-                        width: iconSize / 2,
+                        width: widget.iconSize / 2,
                       ),
                       FlickFullScreenToggle(
-                        size: iconSize,
+                        size: widget.iconSize,
                       ),
                     ],
                   ),

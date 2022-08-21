@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flick_video_player/flick_video_player.dart';
-import 'package:provider/provider.dart';
 
 import 'data_manager.dart';
 
 /// Default portrait controls.
 class WebVideoControl extends StatelessWidget {
-  const WebVideoControl(
-      {Key? key,
-      this.iconSize = 20,
-      this.fontSize = 12,
-      this.progressBarSettings,
-      this.dataManager})
-      : super(key: key);
+  const WebVideoControl({Key? key, this.iconSize = 20, this.fontSize = 12, this.progressBarSettings, this.dataManager}) : super(key: key);
 
   /// Icon size.
   ///
@@ -32,8 +25,6 @@ class WebVideoControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlickVideoManager flickVideoManager =
-        Provider.of<FlickVideoManager>(context);
     return FlickShowControlsActionWeb(
       child: Stack(
         children: <Widget>[
@@ -71,9 +62,7 @@ class WebVideoControl extends StatelessWidget {
                             },
                             child: Icon(
                               Icons.skip_previous,
-                              color: dataManager!.hasPreviousVideo()
-                                  ? Colors.white
-                                  : Colors.white38,
+                              color: dataManager!.hasPreviousVideo() ? Colors.white : Colors.white38,
                               size: 35,
                             ),
                           ),
@@ -90,9 +79,7 @@ class WebVideoControl extends StatelessWidget {
                             },
                             child: Icon(
                               Icons.skip_next,
-                              color: dataManager!.hasNextVideo()
-                                  ? Colors.white
-                                  : Colors.white38,
+                              color: dataManager!.hasNextVideo() ? Colors.white : Colors.white38,
                               size: 35,
                             ),
                           ),
@@ -139,8 +126,7 @@ class WebVideoControl extends StatelessWidget {
                               FlickAutoHideChild(
                                 child: Text(
                                   ' / ',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: fontSize),
+                                  style: TextStyle(color: Colors.white, fontSize: fontSize),
                                 ),
                               ),
                               FlickTotalDuration(

@@ -2,7 +2,6 @@ import 'package:example/custom_orientation_player/controls.dart';
 import 'package:example/utils/mock_data.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:video_player/video_player.dart';
 
@@ -12,16 +11,13 @@ class CustomOrientationPlayer extends StatefulWidget {
   CustomOrientationPlayer({Key? key}) : super(key: key);
 
   @override
-  _CustomOrientationPlayerState createState() =>
-      _CustomOrientationPlayerState();
+  _CustomOrientationPlayerState createState() => _CustomOrientationPlayerState();
 }
 
 class _CustomOrientationPlayerState extends State<CustomOrientationPlayer> {
   late FlickManager flickManager;
   late DataManager dataManager;
-  List<String> urls = (mockData["items"] as List)
-      .map<String>((item) => item["trailer_url"])
-      .toList();
+  List<String> urls = (mockData["items"] as List).map<String>((item) => item["trailer_url"]).toList();
 
   @override
   void initState() {
@@ -64,11 +60,11 @@ class _CustomOrientationPlayerState extends State<CustomOrientationPlayer> {
             height: 200,
             child: FlickVideoPlayer(
               flickManager: flickManager,
-              preferredDeviceOrientationFullscreen: [
-                DeviceOrientation.portraitUp,
-                DeviceOrientation.landscapeLeft,
-                DeviceOrientation.landscapeRight,
-              ],
+              // preferredDeviceOrientationFullscreen: [
+              //   DeviceOrientation.portraitUp,
+              //   DeviceOrientation.landscapeLeft,
+              //   DeviceOrientation.landscapeRight,
+              // ],
               flickVideoWithControls: FlickVideoWithControls(
                 controls: CustomOrientationControls(dataManager: dataManager),
               ),

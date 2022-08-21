@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         backgroundColor: Color.fromRGBO(246, 245, 250, 1),
+        appBar: AppBar(),
         body: SafeArea(child: Examples()),
       ),
     );
@@ -44,10 +45,7 @@ class _ExamplesState extends State<Examples> {
     {'name': 'Feed player', 'widget': Expanded(child: FeedPlayer())},
     {'name': 'Custom orientation player', 'widget': CustomOrientationPlayer()},
     {'name': 'Landscape player', 'widget': LandscapePlayer()},
-    {
-      'name': 'Short Video Player',
-      'widget': Expanded(child: ShortVideoHomePage())
-    },
+    {'name': 'Short Video Player', 'widget': Expanded(child: ShortVideoHomePage())},
   ];
 
   int selectedIndex = 0;
@@ -115,11 +113,8 @@ class _ExamplesState extends State<Examples> {
                         child: Text(
                           samples.asMap()[index]?['name'],
                           style: TextStyle(
-                            color: index == selectedIndex
-                                ? Color.fromRGBO(100, 109, 236, 1)
-                                : Color.fromRGBO(173, 176, 183, 1),
-                            fontWeight:
-                                index == selectedIndex ? FontWeight.bold : null,
+                            color: index == selectedIndex ? Color.fromRGBO(100, 109, 236, 1) : Color.fromRGBO(173, 176, 183, 1),
+                            fontWeight: index == selectedIndex ? FontWeight.bold : null,
                           ),
                         ),
                       ),

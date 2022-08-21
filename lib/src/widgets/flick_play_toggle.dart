@@ -55,8 +55,7 @@ class FlickPlayToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlickControlManager controlManager =
-        Provider.of<FlickControlManager>(context);
+    FlickControlManager controlManager = Provider.of<FlickControlManager>(context);
     FlickVideoManager videoManager = Provider.of<FlickVideoManager>(context);
 
     Widget playWidget = playChild ??
@@ -84,15 +83,14 @@ class FlickPlayToggle extends StatelessWidget {
             ? pauseWidget
             : playWidget;
 
-    return GestureDetector(
+    return InkWell(
+        borderRadius: BorderRadius.circular(150),
         key: key,
         onTap: () {
           if (togglePlay != null) {
             togglePlay!();
           } else {
-            videoManager.isVideoEnded
-                ? controlManager.replay()
-                : controlManager.togglePlay();
+            videoManager.isVideoEnded ? controlManager.replay() : controlManager.togglePlay();
           }
         },
         child: Container(

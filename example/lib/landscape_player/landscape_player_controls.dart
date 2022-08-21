@@ -1,14 +1,10 @@
-import 'dart:ui';
-
 import 'package:example/landscape_player/play_toggle.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class LandscapePlayerControls extends StatelessWidget {
-  const LandscapePlayerControls(
-      {Key? key, this.iconSize = 20, this.fontSize = 12})
-      : super(key: key);
+  const LandscapePlayerControls({Key? key, this.iconSize = 20, this.fontSize = 12}) : super(key: key);
   final double iconSize;
   final double fontSize;
 
@@ -65,30 +61,18 @@ class LandscapePlayerControls extends StatelessWidget {
                               ),
                               backgroundColor: Colors.white24,
                               bufferedColor: Colors.white38,
-                              getPlayedPaint: (
-                                  {double? handleRadius,
-                                  double? height,
-                                  double? playedPart,
-                                  double? width}) {
+                              getPlayedPaint: ({double? handleRadius, double? height, double? playedPart, double? width}) {
                                 return Paint()
-                                  ..shader = LinearGradient(colors: [
-                                    Color.fromRGBO(108, 165, 242, 1),
-                                    Color.fromRGBO(97, 104, 236, 1)
-                                  ], stops: [
-                                    0.0,
-                                    0.5
-                                  ]).createShader(
+                                  ..shader =
+                                      LinearGradient(colors: [Color.fromRGBO(108, 165, 242, 1), Color.fromRGBO(97, 104, 236, 1)], stops: [0.0, 0.5])
+                                          .createShader(
                                     Rect.fromPoints(
                                       Offset(0, 0),
                                       Offset(width!, 0),
                                     ),
                                   );
                               },
-                              getHandlePaint: (
-                                  {double? handleRadius,
-                                  double? height,
-                                  double? playedPart,
-                                  double? width}) {
+                              getHandlePaint: ({double? handleRadius, double? height, double? playedPart, double? width}) {
                                 return Paint()
                                   ..shader = RadialGradient(
                                     colors: [
@@ -130,10 +114,8 @@ class LandscapePlayerControls extends StatelessWidget {
           top: 10,
           child: GestureDetector(
             onTap: () {
-              SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-                  overlays: SystemUiOverlay.values);
-              SystemChrome.setPreferredOrientations(
-                  [DeviceOrientation.portraitUp]);
+              SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+              SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
               Navigator.pop(context);
             },
             child: Icon(

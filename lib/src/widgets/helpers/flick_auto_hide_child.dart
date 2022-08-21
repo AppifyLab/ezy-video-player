@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 /// AutoHide child according to timeout managed by [FlickDisplayManager].
 ///
 /// Hides the child with [FadeAnimation].
-class FlickAutoHideChild extends StatelessWidget {
+class FlickAutoHideChild extends StatefulWidget {
   const FlickAutoHideChild({
     Key? key,
     required this.child,
@@ -19,25 +19,19 @@ class FlickAutoHideChild extends StatelessWidget {
   final bool showIfVideoNotInitialized;
 
   @override
+  State<FlickAutoHideChild> createState() => _FlickAutoHideChildState();
+}
+
+class _FlickAutoHideChildState extends State<FlickAutoHideChild> {
+  @override
   Widget build(BuildContext context) {
-    FlickDisplayManager displayManager =
-        Provider.of<FlickDisplayManager>(context);
+    FlickDisplayManager displayManager = Provider.of<FlickDisplayManager>(context);
     FlickVideoManager videoManager = Provider.of<FlickVideoManager>(context);
 
-    return (!videoManager.isVideoInitialized && !showIfVideoNotInitialized)
+    return (!videoManager.isVideoInitialized && !widget.showIfVideoNotInitialized)
         ? Container()
-        : autoHide
-            ? AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
-                transitionBuilder: (child, animation) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  );
-                },
-                child:
-                    (displayManager.showPlayerControls) ? child : Container(),
-              )
-            : child;
+        : widget.autoHide && (displayManager.showPlayerControls && (!displayManager.showForwardSeek || !displayManager.showBackwardSeek))
+            ? widget.child
+            : Container();
   }
 }
